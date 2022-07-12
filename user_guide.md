@@ -110,7 +110,33 @@ export env_app_tomcat_ports_warningser=(8600 8086 8006)
 ### 3.2 使用
 #### 3.2.1 准备
 `cd`到`bash/local/`文件夹，执行`./tfp.sh prepage_deploy`；
+改env.sh文件
 
+```bash
+1.更改主机地址，对应
+# 软件安装包url地址
+export env_http_file_server_host='192.168.52.130'
+export env_http_file_server_port='5000'
+# 在这台主机自动部署项目控制路径
+export env_deployPath='/data/deploy'
+# 远程主机项目部署路径
+export env_tfpPath='/data/tfp'
+
+2.更改远程地址，对应的是suse节点，在节点中配置IP地址，追加新的appname
+declare -A env_node_suse2=(["user"]="shijianjs" ["host"]="192.168.52.131" ["ssh_port"]="22" \["apps"]="()")
+
+3.tfp.sh文件第17行
+更改http静态服务：由python2 -m SimpleHTTPServer 5000 改为 python3 -m http.server 5000
+
+4.在tomcat_start.sh中注释掉和探针相关的命令
+
+5.应用tomcat-app，将自己的war包名字添加快捷键，以及设置port
+#mytest
+export env_app_name_mytest="mytest.war"
+export env_app_jvm_opts_mytest="-Xms200m -Xmx400m"
+export env_app_tomcat_ports_mytest=(8701 8702 8703)
+
+```
 #### 3.2.2 安装
 1. `bash -x tfp.sh middleware_all_install` 安装所有中间件
 1. `bash -x tfp.sh tomcat_install_all` 安装所有tomcat

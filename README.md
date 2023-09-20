@@ -104,6 +104,9 @@ WEB-INF/classes/application.properties
     2. wget/scp下载安装包、更新安装包
     3. wget/scp更新环境信息、脚本
     4. ssh触发远程脚本执行
+  
+
+缺陷： ssh 用户需要做免密处理
 
 
 
